@@ -7,4 +7,13 @@ class World
   def to_s
     @two_dimensional_world.map { |row| row.join(' ') }.join("\n")
   end
+
+  # class methods
+  def self.preconstructed_world
+    self.new( [ ['@', '#', '%', '#', '~'],
+                ['#', '$', '%', '#', '$'],
+                ['%', '#', '%', '#', '#'],
+                ['$', '#', '#', '%', '#'],
+                ['%', '$', '#', '#', '#'] ] )
+  end
 end

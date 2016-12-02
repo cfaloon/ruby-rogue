@@ -7,11 +7,7 @@ require_relative 'world.rb'
 TILES = %w(@ # $ % ~)
 
 
-$the_world = World.new( [ ['@', '#', '%', '#', '~'],
-                          ['#', '$', '%', '#', '$'],
-                          ['%', '#', '%', '#', '#'],
-                          ['$', '#', '#', '%', '#'],
-                          ['%', '$', '#', '#', '#'] ] )
+$the_world = World.preconstructed_world
 
 puts $the_world.to_s # print the world
 
