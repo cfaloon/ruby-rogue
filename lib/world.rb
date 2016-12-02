@@ -2,9 +2,11 @@ class World
 
   attr_accessor :two_dimensional_world
 
-  def initialize(height, width)
-    @two_dimensional_world = Array.new(height) { Array.new(width, '%') }
+  def initialize(given_height, given_width)
+    @two_dimensional_world = Array.new(given_height) { Array.new(given_width, '#') }
+    recursive_divide(0, 0, given_height, given_width)
     set_start_and_end
+    add_loot
   end
   
   def height
@@ -36,16 +38,64 @@ class World
   end
 
   private
+  # the start is always along the top of the World, and the end along the bottom.
   def set_start_and_end
-    height_range = (0..height-1)
     width_range = (0..width-1)
-    start_x, start_y = rand(width_range), rand(height_range)
+    start_x, start_y = rand(width_range), 0
     @two_dimensional_world[start_y][start_x] = '@'
-    end_x, end_y = nil, nil # need these variables in scope before looping assignment
-    loop do
-      end_x, end_y = rand(width_range), rand(height_range)
-      break if start_x != end_x && start_y != end_y # loop until these are not the same point
-    end
+    end_x, end_y = rand(width_range), height - 1
     @two_dimensional_world[end_y][end_x] = '~'
+  end
+
+  # after much trial and error with my own (unsatisfying) algorithms,
+  # i settled on a recursive division algorithm with assistance from the internet.
+  # credits visable in README. This isn't 100% true to the algorithm I found
+  # because my world has no walls between tiles. Tiles are walls.
+  def recursive_divide(x, y, h, w)
+    return if h < 3 || w < 3 # our base case to end the recursion
+
+    direction = case
+                when h > w; :horizontal
+                when w > h; :vertical
+                else [:horizontal, :vertical].shuffle.first
+                end
+    
+    wall_x = direction == :horizontal ? x : x + rand(1 .. w - 2)
+    wall_y = direction == :vertical   ? y : y + rand(1 .. h - 2)
+
+    hole_x = direction == :horizontal ? wall_x + rand(w - 2) : wall_x
+    hole_y = direction == :vertical   ? wall_y + rand(h - 2) : wall_y
+
+    length = direction == :horizontal ? w : h
+
+    # draw the wall
+    for step in (0..length - 1)
+      draw_x = direction == :horizontal ? wall_x + step : wall_x
+      draw_y = direction == :vertical ? wall_y + step : wall_y
+      @two_dimensional_world[draw_y][draw_x] = '%'
+    end
+
+    # add the hole
+    @two_dimensional_world[hole_y][hole_x] = '#'
+
+    # recurse!
+    nw, nh = direction == :horizontal ? [w, wall_y-y ] : [wall_x -x, h ]
+    recursive_divide(x-1, y-1, nh, nw)
+    # on the other side of the wall, too.
+    new_x, new_y = direction == :horizontal ? [x, wall_y + 2] : [wall_x + 2, y]
+    nw, nh = direction == :horizontal ? [w, y + h - wall_y - 2] : [x + w - wall_x - 2, h]
+    recursive_divide(new_x, new_y, nh, nw)
+  end
+
+  # a simpler method that swaps out some free spaces for loot to be picked up
+  # denoted by a $ and dependent upon the world size.
+  def add_loot
+    2.upto(height-1) do |depth|
+      next if rand(2) == 0 # an attempt at limiting loot
+      position_x = rand(0..width-1)
+      if @two_dimensional_world[depth][position_x] == '#'
+        @two_dimensional_world[depth][position_x] = '$'
+      end
+    end
   end
 end
