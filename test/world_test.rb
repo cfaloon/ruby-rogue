@@ -1,4 +1,4 @@
-require_relative '../world.rb'
+require_relative '../lib/world.rb'
 require 'minitest'
 require "minitest/autorun"
 

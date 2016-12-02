@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # All the magic starts here!
-require_relative 'world.rb'
+require_relative 'lib/world.rb'
 
 # the characters that will be used as tiles
 TILES = %w(@ # $ % ~)
