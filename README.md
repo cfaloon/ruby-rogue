@@ -30,3 +30,4 @@ I credit the following websites for providing insights and inspiration in creati
 
 - http://www.roguebasin.com/
 - http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
+- http://weblog.jamisbuck.org/2011/1/12/maze-generation-recursive-division-algorithm
