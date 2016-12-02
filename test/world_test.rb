@@ -8,6 +8,8 @@ class WorldTest < Minitest::Test
     world = World.new(10, 20)
     assert_equal world.height, 10
     assert_equal world.width, 20
+    assert_equal 1, world.flatten.count { |tile| tile == '@' } # There is only one entrance
+    assert_equal 1, world.flatten.count { |tile| tile == '~' } # There is only one exit
   end
   
   def test_to_s
