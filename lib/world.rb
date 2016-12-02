@@ -1,9 +1,7 @@
 class World
 
-  def initialize(two_dimensional_array)
-    @two_dimensional_world = two_dimensional_array
-  end
-
+  attr_writer :two_dimensional_world
+  
   def height
     @two_dimensional_world.length
   end
@@ -17,11 +15,15 @@ class World
   end
 
   # class methods
+  def self.create_as_given(two_dimensional_array)
+    self.new.tap { |new_world| new_world.two_dimensional_world = two_dimensional_array }
+  end
+  
   def self.preconstructed_world
-    self.new( [ ['@', '#', '%', '#', '~'],
-                ['#', '$', '%', '#', '$'],
-                ['%', '#', '%', '#', '#'],
-                ['$', '#', '#', '%', '#'],
-                ['%', '$', '#', '#', '#'] ] )
+    self.create_as_given( [ ['@', '#', '%', '#', '~'],
+                            ['#', '$', '%', '#', '$'],
+                            ['%', '#', '%', '#', '#'],
+                            ['$', '#', '#', '%', '#'],
+                            ['%', '$', '#', '#', '#'] ] )
   end
 end

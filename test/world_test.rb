@@ -5,7 +5,6 @@ require "minitest/autorun"
 class WorldTest < Minitest::Test
 
   def test_to_s
-    
     assert_equal simple_world.to_s, "@ # ~\n$ # #"
   end
 
@@ -19,7 +18,7 @@ class WorldTest < Minitest::Test
 
   # helpers
   def simple_world
-    World.new( [['@', '#', '~'],
-                ['$', '#', '#']] )
+    World.create_as_given( [['@', '#', '~'],
+                            ['$', '#', '#']] )
   end
 end
