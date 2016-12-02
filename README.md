@@ -7,19 +7,18 @@ ___
 ## How to Use
 
 - Clone the repository
-- install ruby
-- install bundler ???
-- run it!
-
-## Notes
+- install ruby - [RVM](https://rvm.io) is king, but even a system install on OS X *should* work.
+- install bundler `gem install bundler`
+- install dependencies via bundler: `bundle install`
+- run it! (i.e. `ruby PATH/TO/ruby-rogue.rb`)
 
 ## FAQ
 
 ### What do each of the tiles mean?
 Why, that's simple:
 
- Symbol | Description  |
- :----:  | ------ |
+ Symbol | Description
+ :----: | ------
  @      | The entrance to the dungeon.
  #      | A seemingly empty space. Procede with caution.
  $      | Loot! It might be money, a weapon, an artifact, a spellbook, etc.
