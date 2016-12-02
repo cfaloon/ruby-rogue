@@ -1,6 +1,10 @@
 class World
 
   attr_writer :two_dimensional_world
+
+  def initialize(height, width)
+    @two_dimensional_world = Array.new(height, Array.new(width))
+  end
   
   def height
     @two_dimensional_world.length
@@ -16,14 +20,10 @@ class World
 
   # class methods
   def self.create_as_given(two_dimensional_array)
-    self.new.tap { |new_world| new_world.two_dimensional_world = two_dimensional_array }
-  end
-  
-  def self.preconstructed_world
-    self.create_as_given( [ ['@', '#', '%', '#', '~'],
-                            ['#', '$', '%', '#', '$'],
-                            ['%', '#', '%', '#', '#'],
-                            ['$', '#', '#', '%', '#'],
-                            ['%', '$', '#', '#', '#'] ] )
+    height = two_dimensional_array.length
+    width = two_dimensional_array.first.length
+    self.new(height, width).tap do |new_world|
+      new_world.two_dimensional_world = two_dimensional_array
+    end
   end
 end
