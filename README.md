@@ -20,7 +20,7 @@ Why, that's simple:
  Symbol | Description
  :----: | ------
  @      | The entrance to the dungeon.
- #      | A seemingly empty space. Procede with caution.
+ .      | A seemingly empty space. Procede with caution.
  $      | Loot! It might be money, a weapon, an artifact, a spellbook, etc.
  %      | A stone wall that reaches from the floor to the cieling.
  ~      | The dungeon's exit! The moonlight shines in from the outside.
