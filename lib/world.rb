@@ -3,7 +3,7 @@ class World
   attr_accessor :two_dimensional_world
 
   def initialize(given_height, given_width)
-    @two_dimensional_world = Array.new(given_height) { Array.new(given_width, '#') }
+    @two_dimensional_world = Array.new(given_height) { Array.new(given_width, '.') }
     recursive_divide(0, 0, given_height, given_width)
     set_start_and_end
     add_loot
@@ -42,8 +42,15 @@ class World
   def set_start_and_end
     width_range = (0..width-1)
     start_x, start_y = rand(width_range), 0
+    until(@two_dimensional_world[start_y][start_x] == '.')
+      start_x, start_y = rand(width_range), 0
+    end
     @two_dimensional_world[start_y][start_x] = '@'
+    
     end_x, end_y = rand(width_range), height - 1
+    until(@two_dimensional_world[end_y][end_x] == '.')
+      end_x, end_y = rand(width_range), height - 1
+    end
     @two_dimensional_world[end_y][end_x] = '~'
   end
 
@@ -52,12 +59,12 @@ class World
   # credits visable in README. This isn't 100% true to the algorithm I found
   # because my world has no walls between tiles. Tiles are walls.
   def recursive_divide(x, y, h, w)
-    return if h < 3 || w < 3 # our base case to end the recursion
+    return if h <= 3 || w < 3 # our base case to end the recursion
 
     direction = case
-                when h > w; :horizontal
-                when w > h; :vertical
-                else [:horizontal, :vertical].shuffle.first
+                when h > w; rand() > w / h.to_f ? :horizontal : :vertical
+                when w > h; rand() > h / w.to_f ? :vertical : :horizontal
+                else rand(1) == 0 ? :vertical : :horizontal
                 end
     
     wall_x = direction == :horizontal ? x : x + rand(1 .. w - 2)
@@ -76,7 +83,7 @@ class World
     end
 
     # add the hole
-    @two_dimensional_world[hole_y][hole_x] = '#'
+    @two_dimensional_world[hole_y][hole_x] = '.'
 
     # recurse!
     nw, nh = direction == :horizontal ? [w, wall_y-y ] : [wall_x -x, h ]
@@ -93,7 +100,7 @@ class World
     2.upto(height-1) do |depth|
       next if rand(2) == 0 # an attempt at limiting loot
       position_x = rand(0..width-1)
-      if @two_dimensional_world[depth][position_x] == '#'
+      if @two_dimensional_world[depth][position_x] == '.'
         @two_dimensional_world[depth][position_x] = '$'
       end
     end
