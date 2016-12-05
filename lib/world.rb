@@ -1,3 +1,4 @@
+require 'prime'
 class World
 
   attr_accessor :two_dimensional_world
@@ -10,11 +11,9 @@ class World
   
   def initialize(given_height, given_width)
     @two_dimensional_world = Array.new(given_height) { Array.new(given_width, EMPTY_TILE) }
-    while true
-      recursive_divide(0, 0, given_height, given_width)
-      set_start_and_end
-      break if add_loot
-    end
+    recursive_divide(0, 0, given_height, given_width)
+    set_start_and_end
+    add_loot
   end
   
   def height
@@ -98,11 +97,15 @@ class World
   end
   
   def add_loot
-   2.upto(height-1) do |depth|
-      next unless rand(3) == 0 # an attempt at limiting loot
-      position_x = rand(0..width-1)
-      if @two_dimensional_world[depth][position_x] == EMPTY_TILE
-        @two_dimensional_world[depth][position_x] = LOOT_TILE
+    loot_placed = 0
+    primes = Prime.each(Math.sqrt(width + height)).to_a.last(3)
+    to_be_placed = primes.sample
+    until loot_placed >= to_be_placed do
+      position_x = rand(width)
+      position_y = rand(height)
+      if @two_dimensional_world[position_y][position_x] == EMPTY_TILE
+        @two_dimensional_world[position_y][position_x] = LOOT_TILE
+        loot_placed += 1
       end
     end
   end
