@@ -93,7 +93,7 @@ class World
     # top left quadrant
     recursive_divide(x, y, intersection_y - y - 1, intersection_x - x - 1)
     # top right quadrant
-    recursive_divide(intersection_x + 2, y, intersection_y - 1, w - intersection_x - 2)
+    recursive_divide(intersection_x + 2, y, intersection_y - 1, x + w - intersection_x - 2)
   end
   
   def add_loot
