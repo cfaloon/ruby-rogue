@@ -3,8 +3,6 @@
 # All the magic starts here!
 require_relative 'lib/world.rb'
 
-
-
 def custom_prompt
   integer_regex = /^-?\d+$/
   dimensions = []
@@ -31,7 +29,6 @@ def custom_prompt
   puts World.new(*dimensions)
 end
 
-# TODO: Accept command line arguments for generating the maze.
 puts 'Welcome to ruby-rogue, please type (s)mall, (m)edium, (l)arge or (c)ustom to generate a dungeon.'
 print '> '
 while(true) do
