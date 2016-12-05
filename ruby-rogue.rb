@@ -8,15 +8,14 @@ def custom_prompt
   dimensions = []
   2.times do |n|
     height_width = n == 0 ? 'height' : 'width'
+    puts "Please enter a #{height_width} for your custom dungeon. Minimum #{height_width} is 4."
     while(true) do
-      puts "Please enter a #{height_width} for your custom dungeon. Minimum #{height_width} is 4."
       print '> '
       input = gets.chomp
       if input =~ integer_regex
         input = input.to_i
         if input < 4
           puts "Minimum #{height_width} is 4. Please try again."
-          print '> '
         else
           dimensions << input
           break
@@ -30,8 +29,9 @@ def custom_prompt
 end
 
 puts 'Welcome to ruby-rogue, please type (s)mall, (m)edium, (l)arge or (c)ustom to generate a dungeon.'
-print '> '
+
 while(true) do
+  print '> '
   input = gets.chomp
 
   # parse the input
