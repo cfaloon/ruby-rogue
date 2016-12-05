@@ -25,6 +25,9 @@ Why, that's simple:
  %      | A stone wall that reaches from the floor to the ceiling.
  ~      | The dungeon's exit! The moonlight shines in from the outside.
 
+### How do I run the tests?
+Run this command at the project root: `ruby -Ilib:test test/world_test.rb`
+
 ## Credits
 I credit the following websites for providing insights and inspiration in creating *ruby-rogue*
 
